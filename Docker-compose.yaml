@@ -1,0 +1,47 @@
+services:
+  wallet-service:
+    build: .
+    container_name: wallet_service
+    ports:
+      - "${WALLET_SERVICE_PORT}:${WALLET_SERVICE_PORT}"
+    environment:
+      SERVER_PORT: "${WALLET_SERVICE_PORT}"
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_APPLICATION_NAME: wallet_service
+      SPRING_CLOUD_CONFIG_URI: http://config-service:${CONFIG_SERVICE_PORT}
+    depends_on:
+      - wallet-db
+      - config-service
+    networks:
+      - app-network
+
+  wallet-db:
+    image: postgres
+    container_name: wallet_db
+    ports:
+      - "${WALLET_DB_PORT}:5432"
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123
+    networks:
+      - app-network
+
+  config-service:
+    build: ./config_service
+    env_file:
+      - .env.secrets
+      - .env
+    container_name: config_service
+    ports:
+      - "${CONFIG_SERVICE_PORT}:${CONFIG_SERVICE_PORT}"
+    environment:
+      SERVER_PORT: "${CONFIG_SERVICE_PORT}"
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+

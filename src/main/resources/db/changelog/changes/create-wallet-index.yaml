@@ -1,0 +1,13 @@
+# индекс для поиска кошельков
+
+databaseChangeLog:
+  - changeSet:
+      id: create-wallet-index
+      author: Person_1
+      changes:
+        - createIndex:
+            indexName: idx_wallet_id
+            tableName: wallets
+            columns:
+              - column:
+                  name: wallet_id

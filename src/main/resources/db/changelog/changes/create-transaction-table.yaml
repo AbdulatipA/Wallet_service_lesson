@@ -1,0 +1,46 @@
+# миграция создания таблицы transaction
+
+databaseChangeLog:
+  - changeSet:
+      id: create-transaction-table
+      author: Person_2
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: wallet_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: operation_type
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DECIMAL(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance_before
+                  type: DECIMAL(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance_after
+                  type: DECIMAL(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

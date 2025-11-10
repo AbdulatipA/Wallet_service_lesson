@@ -1,0 +1,42 @@
+# миграция создание таблицы wallet
+
+databaseChangeLog:
+  - changeSet:
+      id: create-wallet-table
+      author: Person_1
+      changes:
+        - createTable:
+            tableName: wallets
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: wallet_id
+                  type: UUID
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: DECIMAL(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false

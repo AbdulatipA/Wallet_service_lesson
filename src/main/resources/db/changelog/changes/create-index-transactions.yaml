@@ -1,0 +1,15 @@
+# составной индекс для частых запросов - индекс по id кошельку и по дате создания транзакции
+
+databaseChangeLog:
+  - changeSet:
+      id: create-index-transactions
+      author: Person_1
+      changes:
+        - createIndex:
+            indexName: idx_transaction_wallet_id
+            tableName: transactions
+            columns:
+              - column:
+                  name: wallet_id
+              - column:
+                  name: create_at

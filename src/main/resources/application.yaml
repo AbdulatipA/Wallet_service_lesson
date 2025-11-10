@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: wallet_service
+
+  datasource:
+    password: 123
+    username: user
+#    url: jdbc:postgresql://localhost:8282/wallet_db
+    url: jdbc:postgresql://wallet-db:5432/wallet_db
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  config:
+    import: "optional:configserver:http://config_service:8888"
+
+  cloud:
+    config:
+      enabled: true
+      name: wallet_service
+      profile: default
+      label: main
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,refresh,loggers,env
+  endpoint:
+    health:
+      show-details: when-authorized
+
+server:
+  port: 8181

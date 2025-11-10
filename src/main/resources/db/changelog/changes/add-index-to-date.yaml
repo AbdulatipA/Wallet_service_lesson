@@ -1,0 +1,13 @@
+# индекс для транзакций по дате
+
+databaseChangeLog:
+  - changeSet:
+      id: add-index-to-date
+      author: Person 1
+      changes:
+        - createIndex:
+            indexName: idx_transaction_createAt
+            tableName: transactions
+            columns:
+              - column:
+                  name: create_at
